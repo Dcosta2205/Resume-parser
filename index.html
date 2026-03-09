@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,11 +33,12 @@ body {
   min-height: 100vh;
 }
 
+/* BACKGROUND GRID */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
+  background-image: 
     linear-gradient(rgba(79,142,247,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(79,142,247,0.03) 1px, transparent 1px);
   background-size: 40px 40px;
@@ -46,6 +48,7 @@ body::before {
 
 .wrap { position: relative; z-index: 1; }
 
+/* HEADER */
 header {
   padding: 22px 40px;
   display: flex;
@@ -88,8 +91,10 @@ header {
   font-weight: 600;
 }
 
+/* MAIN */
 .main { max-width: 900px; margin: 0 auto; padding: 36px 24px 80px; }
 
+/* SECTION TITLE */
 .section-label {
   display: flex;
   align-items: center;
@@ -108,9 +113,18 @@ header {
   flex-shrink: 0;
 }
 
-.section-label h2 { font-size: 15px; font-weight: 700; color: var(--text); }
-.section-label span { font-size: 12.5px; color: var(--muted); }
+.section-label h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
 
+.section-label span {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* CARD */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -122,7 +136,11 @@ header {
 
 .card:hover { border-color: rgba(79,142,247,0.3); }
 
-.field-row { display: flex; gap: 10px; align-items: center; }
+.field-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 
 .field-row input {
   flex: 1;
@@ -152,12 +170,19 @@ header {
   white-space: nowrap;
 }
 
-.btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+}
 .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
 .btn-primary:active { transform: translateY(0); }
 .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-.btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
 .status-line {
@@ -172,14 +197,24 @@ header {
 .status-line.err { color: var(--red); display: flex; }
 .status-line.info { color: var(--accent); display: flex; }
 
-.field-hint { margin-top: 9px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+.field-hint {
+  margin-top: 9px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
 .field-hint a { color: var(--accent); text-decoration: none; }
 .field-hint a:hover { text-decoration: underline; }
 
+/* FOLDER INPUT */
 .folder-row { display: flex; gap: 10px; }
 .folder-row input { flex: 1; }
 
-.progress-wrap { margin-top: 20px; display: none; }
+/* PROGRESS BAR */
+.progress-wrap {
+  margin-top: 20px;
+  display: none;
+}
 .progress-wrap.show { display: block; }
 .progress-label {
   display: flex;
@@ -189,7 +224,12 @@ header {
   margin-bottom: 8px;
   font-weight: 600;
 }
-.progress-track { height: 6px; background: var(--border); border-radius: 10px; overflow: hidden; }
+.progress-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
 .progress-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
@@ -198,6 +238,7 @@ header {
   width: 0%;
 }
 
+/* RESULTS HEADER */
 .results-top {
   display: flex;
   justify-content: space-between;
@@ -207,11 +248,26 @@ header {
   gap: 12px;
 }
 
-.results-top h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; }
-.results-stats { display: flex; gap: 16px; flex-wrap: wrap; }
-.stat { font-size: 12.5px; color: var(--muted); font-weight: 600; }
+.results-top h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.results-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
 .stat span { color: var(--text); }
 
+/* RESULT CARD */
 .result-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -237,7 +293,14 @@ header {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.result-card.loading { display: flex; align-items: center; gap: 16px; color: var(--muted); font-size: 13.5px; }
+.result-card.loading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
 .result-card.error { border-color: rgba(248,113,113,0.3); }
 .result-card.error::before { background: var(--red); }
 
@@ -251,8 +314,20 @@ header {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.rc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; gap: 12px; }
-.rc-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--text); }
+.rc-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.rc-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+}
 
 .rc-file-link {
   display: inline-flex;
@@ -272,7 +347,13 @@ header {
 }
 .rc-file-link:hover { background: rgba(79,142,247,0.2); }
 
-.rc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.rc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
 @media (max-width: 600px) { .rc-grid { grid-template-columns: 1fr; } }
 
 .rc-field label {
@@ -285,7 +366,12 @@ header {
   margin-bottom: 4px;
 }
 
-.rc-field .val { font-size: 13.5px; color: var(--text); font-weight: 500; }
+.rc-field .val {
+  font-size: 13.5px;
+  color: var(--text);
+  font-weight: 500;
+}
+
 .rc-field .val.na { color: #3A3E50; font-style: italic; }
 
 .rc-skills-label {
@@ -311,6 +397,7 @@ header {
 
 .no-skills { font-size: 13px; color: #3A3E50; font-style: italic; }
 
+/* HOW IT WORKS */
 .how-box {
   background: rgba(79,142,247,0.05);
   border: 1px solid rgba(79,142,247,0.15);
@@ -319,14 +406,47 @@ header {
   margin-bottom: 24px;
 }
 
-.how-box h4 { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 12px; letter-spacing: 0.5px; }
-.how-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.how-box h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.how-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
 @media (max-width: 550px) { .how-steps { grid-template-columns: 1fr; } }
 
-.how-step { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.how-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .how-step strong { color: var(--text); }
 
-.view-toggle { display: flex; gap: 6px; }
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+}
+.empty-state .big { font-size: 48px; margin-bottom: 12px; }
+.empty-state p { font-size: 13.5px; line-height: 1.6; }
+
+/* TABLE VIEW */
+.view-toggle {
+  display: flex;
+  gap: 6px;
+}
 .view-btn {
   padding: 7px 14px;
   border-radius: 8px;
@@ -351,14 +471,16 @@ tr:hover td { background: rgba(79,142,247,0.03); }
 td a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 12px; }
 td a:hover { text-decoration: underline; }
 td.na { color: #3A3E50; font-style: italic; }
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
+<!-- CORS WARNING BANNER -->
 <div id="corsBanner" style="display:none; background:#7C1D1D; color:#FCA5A5; padding:14px 24px; font-size:13px; font-weight:600; text-align:center; line-height:1.6;">
   ⚠️ <strong>You are opening this file directly from your computer (file://) — this will cause "Failed to fetch" errors.</strong><br>
-  Fix: Upload to <a href="https://pages.github.com" target="_blank" style="color:#FCD34D;">GitHub Pages</a> or <a href="https://app.netlify.com/drop" target="_blank" style="color:#FCD34D;">Netlify Drop</a>.
+  Fix: Open this file using <strong>VS Code Live Server</strong> extension, or drag the file into <a href="https://app.netlify.com/drop" target="_blank" style="color:#FCD34D;">Netlify Drop</a> (free, instant hosting).
 </div>
 <script>
   if (window.location.protocol === 'file:') {
@@ -370,23 +492,25 @@ td.na { color: #3A3E50; font-style: italic; }
   <div class="logo">📋</div>
   <div class="logo-text">
     <h1>Resume Parser</h1>
-    <p>Google Drive · Powered by Claude AI</p>
+    <p>Google Drive · Powered by Gemini AI</p>
   </div>
   <div class="header-badge">HR Tool</div>
 </header>
 
 <div class="main">
 
+  <!-- HOW IT WORKS -->
   <div class="how-box">
     <h4>⚡ HOW IT WORKS</h4>
     <div class="how-steps">
-      <div class="how-step">📁 <span><strong>Paste your Google Drive folder link</strong> — the tool lists all resume files inside automatically</span></div>
+      <div class="how-step">📁 <span><strong>Paste your Google Drive folder link</strong> — the tool lists all resume files inside it automatically</span></div>
       <div class="how-step">🔑 <span><strong>API keys are pre-configured</strong> — no setup needed, just paste your folder link</span></div>
       <div class="how-step">🤖 <span><strong>Claude reads each resume</strong> and extracts name, email, phone, experience & skills</span></div>
       <div class="how-step">📊 <span><strong>Export to CSV</strong> with one click — includes direct links back to each resume</span></div>
     </div>
   </div>
 
+  <!-- STEP 1: FOLDER LINK -->
   <div class="section-label">
     <div class="step-num">1</div>
     <h2>Google Drive Folder Link</h2>
@@ -410,6 +534,7 @@ td.na { color: #3A3E50; font-style: italic; }
     </div>
   </div>
 
+  <!-- RESULTS -->
   <div id="resultsSection" style="display:none">
     <div class="results-top">
       <h3>Extracted Results</h3>
@@ -432,7 +557,13 @@ td.na { color: #3A3E50; font-style: italic; }
         <table>
           <thead>
             <tr>
-              <th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Experience</th><th>Skills</th><th>Resume</th>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Experience</th>
+              <th>Skills</th>
+              <th>Resume</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -448,7 +579,7 @@ td.na { color: #3A3E50; font-style: italic; }
 // =============================================
 // 🔑 PASTE YOUR API KEYS HERE
 const googleKey = 'AIzaSyDU8DXMsln2DkheoX0impXRqdl-ssNJztg';
-const claudeKey = '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';
+const geminiKey = 'AIzaSyAQgg5hiDmZZo2roJcrUMkL97bpIYnbmaw';
 // =============================================
 
 let results = [];
@@ -479,17 +610,18 @@ async function startParsing() {
   const fStatus = document.getElementById('folderStatus');
 
   if (!googleKey || googleKey === 'YOUR_GOOGLE_API_KEY') { fStatus.textContent = '✗ Please add your Google API key in the code'; fStatus.className = 'status-line err'; return; }
-  if (!claudeKey || claudeKey === 'YOUR_CLAUDE_API_KEY') { fStatus.textContent = '✗ Please add your Claude API key in the code'; fStatus.className = 'status-line err'; return; }
+  if (!geminiKey || geminiKey === 'YOUR_GEMINI_API_KEY') { fStatus.textContent = '✗ Please add your Gemini API key in the code'; fStatus.className = 'status-line err'; return; }
   if (!folderUrl) { fStatus.textContent = '✗ Please paste a Google Drive folder link'; fStatus.className = 'status-line err'; return; }
 
   const folderId = extractFolderId(folderUrl);
-  if (!folderId) { fStatus.textContent = '✗ Could not find a folder ID in that link'; fStatus.className = 'status-line err'; return; }
+  if (!folderId) { fStatus.textContent = '✗ Could not find a folder ID in that link — make sure it\'s a Drive folder URL'; fStatus.className = 'status-line err'; return; }
 
   document.getElementById('startBtn').disabled = true;
   fStatus.textContent = '⏳ Connecting to Google Drive...'; fStatus.className = 'status-line info';
   results = [];
 
   try {
+    // List ALL files in folder with pagination support
     const allowed = [
       'application/pdf',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -503,22 +635,29 @@ async function startParsing() {
     do {
       const pageParam = pageToken ? `&pageToken=${encodeURIComponent(pageToken)}` : '';
       const listUrl = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+trashed=false&fields=nextPageToken,files(id,name,mimeType,size)&key=${googleKey}&pageSize=1000${pageParam}`;
+
       let listResp;
       try {
         listResp = await fetch(listUrl);
       } catch(fetchErr) {
-        throw new Error('Failed to fetch from Google Drive. Make sure your API key allows this domain.');
+        if (fetchErr.message.includes('Failed to fetch')) {
+          throw new Error('CORS Error: Your browser is blocking this request because the file is opened locally (file://). Please open this HTML file through a web server. Easiest fix: open it via VS Code Live Server, or upload it to any website host.');
+        }
+        throw new Error('Network error connecting to Google Drive: ' + fetchErr.message);
       }
       const listData = await listResp.json();
+
       if (listData.error) {
-        if (listData.error.code === 403) throw new Error('Google API Error 403: Access denied. Check your API key and folder sharing settings.');
-        if (listData.error.code === 400) throw new Error('Google API Error 400: Invalid request. Check your API key.');
+        if (listData.error.code === 403) throw new Error('Google API Error 403: Access denied. Make sure (1) your Google API key is correct, (2) Google Drive API is enabled in Google Cloud Console, and (3) the folder is shared as "Anyone with the link can view".');
+        if (listData.error.code === 400) throw new Error('Google API Error 400: Invalid request. Double-check your Google API key is correct.');
         throw new Error('Google API Error: ' + listData.error.message);
       }
+
       allFiles = allFiles.concat(listData.files || []);
       pageToken = listData.nextPageToken || '';
     } while (pageToken);
 
+    // Fix: match full mimeType strings, not broken splits
     const files = allFiles.filter(f =>
       allowed.includes(f.mimeType) || f.name.match(/\.(pdf|docx|doc|txt)$/i)
     );
@@ -558,6 +697,7 @@ async function parseDriveFile(file, idx) {
   const loadId = `rc-${idx}`;
   const driveLink = `https://drive.google.com/file/d/${file.id}/view`;
 
+  // Loading card
   const loadDiv = document.createElement('div');
   loadDiv.className = 'result-card loading';
   loadDiv.id = loadId;
@@ -565,50 +705,46 @@ async function parseDriveFile(file, idx) {
   cardsView.appendChild(loadDiv);
 
   try {
-    let text = '';
-    let messages;
+    let geminiContents;
     const isPdf = file.mimeType === 'application/pdf' || file.name.endsWith('.pdf');
     const isGdoc = file.mimeType === 'application/vnd.google-apps.document';
 
     if (isPdf) {
+      // Download PDF as base64
       const dlResp = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${googleKey}`);
       if (!dlResp.ok) throw new Error('Could not download file (check sharing permissions)');
       const blob = await dlResp.blob();
       const b64 = await blobToBase64(blob);
-      messages = [{
-        role: 'user',
-        content: [
-          { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: b64 } },
-          { type: 'text', text: PROMPT }
+      geminiContents = [{
+        parts: [
+          { inline_data: { mime_type: 'application/pdf', data: b64 } },
+          { text: PROMPT }
         ]
       }];
     } else if (isGdoc) {
+      // Export Google Doc as plain text
       const expResp = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}/export?mimeType=text/plain&key=${googleKey}`);
       if (!expResp.ok) throw new Error('Could not export Google Doc');
-      text = await expResp.text();
-      messages = [{ role: 'user', content: `${PROMPT}\n\nResume text:\n${text}` }];
+      const text = await expResp.text();
+      geminiContents = [{ parts: [{ text: `${PROMPT}\n\nResume text:\n${text}` }] }];
     } else {
+      // DOCX/TXT
       const dlResp = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${googleKey}`);
       if (!dlResp.ok) throw new Error('Could not download file — make sure folder is shared as "Anyone with the link can view"');
-      text = await dlResp.text();
-      messages = [{ role: 'user', content: `${PROMPT}\n\nResume text (extracted):\n${text.substring(0, 15000)}` }];
+      const text = await dlResp.text();
+      geminiContents = [{ parts: [{ text: `${PROMPT}\n\nResume text (extracted):\n${text.substring(0, 15000)}` }] }];
     }
 
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': claudeKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1000, messages })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: geminiContents })
     });
 
     const data = await resp.json();
-    if (data.error) throw new Error(data.error.message);
+    if (data.error) throw new Error('Gemini Error: ' + data.error.message);
 
-    const raw = data.content.map(b => b.text || '').join('');
+    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     const clean = raw.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
     parsed._file = file.name;
@@ -668,9 +804,18 @@ function renderCard(el, d) {
       <a class="rc-file-link" href="${d._link}" target="_blank">📄 Open Resume ↗</a>
     </div>
     <div class="rc-grid">
-      <div class="rc-field"><label>✉ Email</label><div class="val ${d.email ? '' : 'na'}">${d.email || 'Not found'}</div></div>
-      <div class="rc-field"><label>📞 Phone</label><div class="val ${d.phone ? '' : 'na'}">${d.phone || 'Not found'}</div></div>
-      <div class="rc-field"><label>⏱ Experience</label><div class="val ${d.total_experience ? '' : 'na'}">${d.total_experience || 'Not found'}</div></div>
+      <div class="rc-field">
+        <label>✉ Email</label>
+        <div class="val ${d.email ? '' : 'na'}">${d.email || 'Not found'}</div>
+      </div>
+      <div class="rc-field">
+        <label>📞 Phone</label>
+        <div class="val ${d.phone ? '' : 'na'}">${d.phone || 'Not found'}</div>
+      </div>
+      <div class="rc-field">
+        <label>⏱ Experience</label>
+        <div class="val ${d.total_experience ? '' : 'na'}">${d.total_experience || 'Not found'}</div>
+      </div>
     </div>
     <div class="rc-skills-label">🛠 Skills</div>
     <div class="tag-wrap">${skillsHtml}</div>
@@ -696,7 +841,16 @@ function exportCSV() {
   if (!results.length) { alert('No results to export yet.'); return; }
   const rows = [['#', 'Name', 'Email', 'Phone', 'Total Experience', 'Skills', 'Resume Link', 'File Name']];
   results.forEach((r, i) => {
-    rows.push([i + 1, r.name || '', r.email || '', r.phone || '', r.total_experience || '', (r.skills || []).join('; '), r._link || '', r._file || '']);
+    rows.push([
+      i + 1,
+      r.name || '',
+      r.email || '',
+      r.phone || '',
+      r.total_experience || '',
+      (r.skills || []).join('; '),
+      r._link || '',
+      r._file || ''
+    ]);
   });
   const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
   const a = document.createElement('a');
