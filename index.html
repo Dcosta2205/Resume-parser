@@ -730,7 +730,7 @@ async function parseDriveFile(file, idx, googleKey) {
         max_tokens: 1000,
         messages: claudeMessages
       })
-    });,
+    });
 
     const data = await resp.json();
     if (data.error) throw new Error('Claude API Error: ' + data.error.message);
