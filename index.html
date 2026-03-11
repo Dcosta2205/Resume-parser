@@ -446,10 +446,7 @@ td.na { color: #3A3E50; font-style: italic; }
   </div>
   <div class="card">
     <div style="display:flex; flex-direction:column; gap:12px;">
-      <div class="field-row">
-        <input type="password" id="googleKeyInput" placeholder="Google API Key (for Drive file access)…" />
-      </div>
-  
+
     </div>
     <div class="field-hint">
       Google key: <a href="https://console.cloud.google.com/apis/credentials" target="_blank">console.cloud.google.com</a> — enable Google Drive API &nbsp;|&nbsp;
@@ -524,9 +521,7 @@ let currentView = 'cards';
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function getKeys() {
-  return {
-    googleKey: document.getElementById('googleKeyInput').value.trim(),
-  };
+  return {};
 }
 
 function extractFolderId(url) {
@@ -584,7 +579,6 @@ async function startParsing() {
   const fStatus   = document.getElementById('folderStatus');
 
   // Validation
-  if (!googleKey) { fStatus.textContent = '✗ Please enter your Google API key'; fStatus.className = 'status-line err'; return; }
   if (!folderUrl) { fStatus.textContent = '✗ Please paste a Google Drive folder link'; fStatus.className = 'status-line err'; return; }
 
   const folderId = extractFolderId(folderUrl);
@@ -613,7 +607,11 @@ async function startParsing() {
 
       let listResp;
       try {
-        listResp = await fetch(listUrl);
+        listResp = listResp = await fetch('https://resume-parser.dcostalloyd90.workers.dev', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'listFiles', folderId, pageToken })
+        });
       } catch (fetchErr) {
         if (fetchErr.message.includes('Failed to fetch')) {
           throw new Error('CORS Error: Open this file via a web server (VS Code Live Server or Netlify Drop), not directly from disk.');
@@ -696,10 +694,14 @@ async function parseDriveFile(file, idx, googleKey) {
 
     if (isPdf) {
       // Download PDF → base64 → send as document block
-      const dlResp = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${googleKey}`);
+     const dlResp = await fetch('https://resume-parser.dcostalloyd90.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'downloadFile', fileId: file.id, mimeType: file.mimeType })
+      });
       if (!dlResp.ok) throw new Error('Could not download PDF — check folder sharing permissions');
-      const blob = await dlResp.blob();
-      const b64  = await blobToBase64(blob);
+      const dlData = await dlResp.json();
+      const b64 = dlData.base64;
 
       claudeMessages = [{
         role: 'user',
@@ -711,28 +713,35 @@ async function parseDriveFile(file, idx, googleKey) {
 
     } else if (isGdoc) {
       // Export Google Doc as plain text
-      const expResp = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}/export?mimeType=text/plain&key=${googleKey}`);
+      const expResp = await fetch('https://resume-parser.dcostalloyd90.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'downloadFile', fileId: file.id, mimeType: file.mimeType })
+      });
       if (!expResp.ok) throw new Error('Could not export Google Doc');
-      const text = await expResp.text();
+      const expData = await expResp.json();
+      const text = atob(expData.base64);
       claudeMessages = [{ role: 'user', content: `${PROMPT}\n\nResume text:\n${text}` }];
 
     } else {
       // DOCX / TXT — download and read as text
-      const dlResp = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${googleKey}`);
+      const dlResp = await fetch('https://resume-parser.dcostalloyd90.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'downloadFile', fileId: file.id, mimeType: file.mimeType })
+      });
       if (!dlResp.ok) throw new Error('Could not download file — ensure folder is shared as "Anyone with the link can view"');
-      const text = await dlResp.text();
+      const dlData = await dlResp.json();
+      const text = atob(dlData.base64);
       claudeMessages = [{ role: 'user', content: `${PROMPT}\n\nResume text (extracted):\n${text.substring(0, 15000)}` }];
     }
 
     // ── Call Claude API ──────────────────────────────────────────────────────
     const resp = await fetch('https://resume-parser.dcostalloyd90.workers.dev', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1000,
+        action: 'parseResume',
         messages: claudeMessages
       })
     });
