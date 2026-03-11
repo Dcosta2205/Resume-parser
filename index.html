@@ -656,6 +656,11 @@ async function startParsing() {
       setProgress(`Parsing ${i + 1} of ${files.length}: ${f.name}`, Math.round((i / files.length) * 100));
       await parseDriveFile(f, i, googleKey);
       document.getElementById('statDone').textContent = i + 1;
+      
+      // Wait 10 seconds between files to avoid rate limit
+      if (i < files.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 10000));
+      }
     }
 
     setProgress('All done!', 100);
