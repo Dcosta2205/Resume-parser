@@ -449,9 +449,7 @@ td.na { color: #3A3E50; font-style: italic; }
       <div class="field-row">
         <input type="password" id="googleKeyInput" placeholder="Google API Key (for Drive file access)…" />
       </div>
-      <div class="field-row">
-        <input type="password" id="claudeKeyInput" placeholder="Anthropic Claude API Key (sk-ant-…)…" />
-      </div>
+  
     </div>
     <div class="field-hint">
       Google key: <a href="https://console.cloud.google.com/apis/credentials" target="_blank">console.cloud.google.com</a> — enable Google Drive API &nbsp;|&nbsp;
@@ -528,7 +526,6 @@ let currentView = 'cards';
 function getKeys() {
   return {
     googleKey: document.getElementById('googleKeyInput').value.trim(),
-    claudeKey: document.getElementById('claudeKeyInput').value.trim()
   };
 }
 
@@ -582,13 +579,12 @@ Rules:
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function startParsing() {
-  const { googleKey, claudeKey } = getKeys();
+  const { googleKey } = getKeys();
   const folderUrl = document.getElementById('folderInput').value.trim();
   const fStatus   = document.getElementById('folderStatus');
 
   // Validation
   if (!googleKey) { fStatus.textContent = '✗ Please enter your Google API key'; fStatus.className = 'status-line err'; return; }
-  if (!claudeKey) { fStatus.textContent = '✗ Please enter your Anthropic Claude API key'; fStatus.className = 'status-line err'; return; }
   if (!folderUrl) { fStatus.textContent = '✗ Please paste a Google Drive folder link'; fStatus.className = 'status-line err'; return; }
 
   const folderId = extractFolderId(folderUrl);
@@ -658,7 +654,7 @@ async function startParsing() {
     for (let i = 0; i < files.length; i++) {
       const f = files[i];
       setProgress(`Parsing ${i + 1} of ${files.length}: ${f.name}`, Math.round((i / files.length) * 100));
-      await parseDriveFile(f, i, googleKey, claudeKey);
+      await parseDriveFile(f, i, googleKey);
       document.getElementById('statDone').textContent = i + 1;
     }
 
@@ -676,7 +672,7 @@ async function startParsing() {
 
 // ── Parse a single file ───────────────────────────────────────────────────────
 
-async function parseDriveFile(file, idx, googleKey, claudeKey) {
+async function parseDriveFile(file, idx, googleKey) {
   const cardsView = document.getElementById('cardsView');
   const driveLink = `https://drive.google.com/file/d/${file.id}/view`;
 
@@ -724,20 +720,17 @@ async function parseDriveFile(file, idx, googleKey, claudeKey) {
     }
 
     // ── Call Claude API ──────────────────────────────────────────────────────
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch('https://resume-parser.dcostalloyd90.workers.dev', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': claudeKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-beta': 'pdfs-2024-09-25'   // required for PDF document blocks
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',    // fast + cost-efficient for extraction
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 1000,
         messages: claudeMessages
       })
-    });
+    });,
 
     const data = await resp.json();
     if (data.error) throw new Error('Claude API Error: ' + data.error.message);
